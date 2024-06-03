@@ -1,106 +1,93 @@
-//Author: Jacob Somer
-//Assignment 6
+/**
+ * @author Jacob Somer
+ * @brief Assignment 6
+ */
 #include <stdio.h>
-#include <stdlib.h>
-#include"date.c"
+#include "date.h"
 
+static void print_date(const char *id, const DATE_T *date)
+{
+	char format[19] = { 0 };
 
-int main(){
-	DATE_T *d1, d2, d3;
-	char format_str[50];
-	d1= malloc(350);
-	init_date_1(d1);
-	init_date(&d2,30,12,1999);
-	init_date(&d3,1,1,2000);
+	format_date(date, format);
+	printf("%s %s\n", id, format);
+}
 
-	format_date(*d1, format_str);
-	printf("%s","d1: ");
-	printf("%s\n", format_str);
-	format_date(d2, format_str);
-	printf("%s","d2: ");
-	printf("%s\n", format_str);
-	format_date(d3, format_str);
-	printf("%s","d3: ");
-	printf("%s\n", format_str);
-	printf("%s\n","");
+static const char *str_date_less_than(const DATE_T *d1, const DATE_T *d2)
+{
+	if (date_less_than(d1, d2) == 1)
+		return "TRUE";
+	return "FALSE";
+}
 
- 	printf("%s\n",format_str);
- 	if (date_less_than(*d1,d2)==1){
- 	    printf("%s\n","d1 < d2? TRUE");}
- 	else{
- 	    printf("%s\n","d1 < d2? FALSE");
- 	}
- 	if (date_less_than(d2,d3)==1){
- 	    printf("%s\n","d2 < d3? TRUE");}
- 	else{
- 	    printf("%s\n","d2 < d3? FALSE");
- 	}
- 	printf("%s\n","");
- 	next_day(&d2);
- 	format_date(d2,format_str);
- 	printf("%s","next day d2: ");
- 	printf("%s\n",format_str);
- 	if (date_less_than(d2,d3)==1){
- 	    printf("%s\n","d2 < d3? TRUE");}
- 	else{
- 	    printf("%s\n","d2 < d3? FALSE");}
- 	if (date_equal(d2,d3)==1){
- 	    printf("%s\n","d2 = d3? TRUE");}
- 	else{
- 	    printf("%s\n","d2 = d3? FALSE");}
- 	if (date_less_than(d2,d3)==0){
- 	    printf("%s\n","d2 > d3? TRUE");}
- 	else{
- 	    printf("%s\n","d2 > d3? FALSE");}
- 	printf("%s\n","");
- 	next_day(&d2);
- 	format_date(d2,format_str);
- 	printf("%s","next day d2: ");
- 	printf("%s\n",format_str);
- 	if (date_equal(d2,d3)==1){
- 	    printf("%s\n","d2 = d3? TRUE");}
- 	else{
- 	    printf("%s\n","d2 = d3? FALSE");}
- 	printf("%s\n","");
+static const char *str_date_greater_than(const DATE_T *d1, const DATE_T *d2)
+{
+	if (date_greater_than(d1, d2) == 1)
+		return "TRUE";
+	return "FALSE";
+}
 
- 	printf("%s","initialized d1 to ");
- 	init_date(d1,28,2,1529);
- 	format_date(*d1,format_str);
- 	printf("%s\n",format_str);
- 	next_day(d1);
- 	format_date(*d1,format_str);
- 	printf("%s","next day d1: ");
- 	printf("%s\n",format_str);
- 	printf("%s\n","");
+static const char *str_date_equal(const DATE_T *d1, const DATE_T *d2)
+{
+	if (date_equal(d1, d2) == 1)
+		return "TRUE";
+	return "FALSE";
+}
 
- 	printf("%s","initialized d1 to ");
- 	init_date(d1,28,2,1460);
- 	format_date(*d1,format_str);
- 	printf("%s\n",format_str);
- 	next_day(d1);
- 	format_date(*d1,format_str);
- 	printf("%s","next day d1: ");
- 	printf("%s\n",format_str);
- 	printf("%s\n","");
+int main()
+{
+	DATE_T d1 = { 0 };
+	DATE_T d2 = { 0 };
+	DATE_T d3 = { 0 };
 
- 	printf("%s","initialized d1 to ");
- 	init_date(d1,28,2,1700);
- 	format_date(*d1,format_str);
- 	printf("%s\n",format_str);
- 	next_day(d1);
- 	format_date(*d1,format_str);
- 	printf("%s","next day d1: ");
- 	printf("%s\n",format_str);
- 	printf("%s\n","");
+	init_date(&d1);
+	set_date_to(&d2, 30, 12, 1999);
+	set_date_to(&d3, 1, 1, 2000);
 
- 	printf("%s","initialized d1 to ");
- 	init_date(d1,28,2,1600);
- 	format_date(*d1,format_str);
- 	printf("%s\n",format_str);
- 	next_day(d1);
- 	format_date(*d1,format_str);
- 	printf("%s","next day d1: ");
- 	printf("%s\n",format_str);
- 	printf("%s\n","");
-	return (0);
+	print_date("d1:", &d1);
+	print_date("d2:", &d2);
+	print_date("d3:", &d3);
+	printf("\n");
+
+	printf("d1 < d2 ? %s\n", str_date_less_than(&d1, &d2));
+	printf("d2 < d3 ? %s\n", str_date_less_than(&d2, &d3));
+	printf("\n");
+
+	next_day(&d2);
+	print_date("next day d2", &d2);
+	printf("d2 < d3 ? %s\n", str_date_less_than(&d2, &d3));
+	printf("d2 = d3 ? %s\n", str_date_equal(&d2, &d3));
+	printf("d2 > d3 ? %s\n", str_date_greater_than(&d2, &d3));
+	printf("\n");
+
+	next_day(&d2);
+	print_date("next day d2", &d2);
+	printf("d2 = d3 ? %s\n", str_date_equal(&d2, &d3));
+	printf("\n");
+
+	set_date_to(&d1, 28, 2, 1529);
+	print_date("initialized d1 to", &d1);
+	next_day(&d1);
+	print_date("next day d1", &d1);
+	printf("\n");
+
+	set_date_to(&d1, 28, 2, 1460);
+	print_date("initialized d1 to", &d1);
+	next_day(&d1);
+	print_date("next day d1", &d1);
+	printf("\n");
+
+	set_date_to(&d1, 28, 2, 1700);
+	print_date("initialized d1 to", &d1);
+	next_day(&d1);
+	print_date("next day d1", &d1);
+	printf("\n");
+
+	set_date_to(&d1, 28, 2, 1600);
+	print_date("initialized d1 to", &d1);
+	next_day(&d1);
+	print_date("next day d1", &d1);
+	printf("\n");
+
+	return 0;
 }

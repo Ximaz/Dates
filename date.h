@@ -5,25 +5,24 @@ typedef struct DATE_T {
    int day;
    int month;
    int year;
-}DATE_T;
+} DATE_T;
 
+void init_date(DATE_T *date);
 
-static void init_date (DATE_T *date, int day, int month, int year);
+void set_date_to(DATE_T *date, int day, int month, int year);
 
-static void init_date_1(DATE_T*date);
+int date_equal(const DATE_T *d1, const DATE_T *d2);
 
-static int date_equal(DATE_T date1, DATE_T date2);
+int date_less_than(const DATE_T *d1, const DATE_T *d2);
 
-static int date_less_than(DATE_T date1, DATE_T date2);
+int date_greater_than(const DATE_T *d1, const DATE_T *d2);
 
-static char *month_str (int month);
+void format_date(const DATE_T *date, char *str);
 
-static void format_date (DATE_T date, char *str);
+int leap_year(int year);
 
-static int leap_year (int year);
+int month_length(int month, int leap);
 
-static int month_length (int month, int leap);
-
-static void next_day (DATE_T *date);
+void next_day(DATE_T *date);
 
 #endif
